@@ -236,6 +236,7 @@ def query_score(n_prev_day):
 @auto.doc()
 def query_property_history_by_name(property_name, n_prev_day):
     """
+    Example for location:
     Get the historical values for the car status property
     :param property_name: status property, currently accept: Score, Speed, Odometer or Location
     :param n_prev_day: <last n_prev_day> day values will be returned
@@ -244,6 +245,25 @@ def query_property_history_by_name(property_name, n_prev_day):
       {"series": [ [<timestamp>,{"latitude": <float_val>, "longitude": <float_val>}], ... ] }
     else:
       {"series": [ [<timestamp>, <value>], ...] }
+
+      Example for location:
+
+      Example for other property:
+      {
+            "series": [
+            [
+              1447647446000,
+              9
+            ],
+            [
+              1447654646000,
+              13.405531792385005
+            ],
+            [
+              1447661846000,
+              15.905465020438427
+            ]
+      ] }
     """
     if property_name == 'Score':
         if n_prev_day < 4:
