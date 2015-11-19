@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MSIG Insurance</title>
+    <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="lib/dashboards/keen-dashboards.css" rel="stylesheet" type="text/css">
+    <link href="main.css" rel="stylesheet" type="text/css">
+    <script src="lib/jquery/jquery-2.1.4.min.js">
+    </script>
+    <script src="lib/bootstrap/bootstrap.min.js">
+    </script>
+    <script src="lib/dashboards/keen.min.js">
+    </script>
+    <script src="lib/holder/holder.js">
+    </script>
+    <script src="lib/highcharts/highcharts.js">
+    </script>
+    <script src="lib/highcharts/highcharts-more.js">
+    </script>
+    <script src="lib/highcharts/solid-gauge.js">
+    </script>
+    <script src="lib/jquery/jquery.knob.js">
+    </script>
+    <script src="main.js">
+    </script>
+    
+</head>
+
+<body class="application">
+<div>
+    <div class="alert alert-danger" role="alert" id="alert-driver" style="display: none">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        Warning: <strong>Potential incident alert!</strong> Driver performance is below the recommended level.
+    </div>
+</div>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse"
+                    type="button"><span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span>
+                <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <a class="navbar-brand" href="../"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <a class="navbar-brand" href="./">Driver Dashboard</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <!--<ul class="nav navbar-nav navbar-left">-->
+            <!--<li><a href="https://keen.io">Home</a></li>-->
+            <!--<li><a href="https://keen.io/team">Team</a></li>-->
+            <!--<li>-->
+            <!--<a href="https://github.com/keenlabs/dashboards/tree/gh-pages/layouts/two-and-one">Source</a>-->
+            <!--</li>-->
+            <!--<li><a href="https://groups.google.com/forum/#!forum/keen-io-devs">Community</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a href="http://stackoverflow.com/questions/tagged/keen-io?sort=newest&pageSize=15">Technical-->
+            <!--Support</a></li>-->
+            <!--</ul>-->
+            <div class="text-right" style="margin-top: 5px;">
+                <h4 style="display:inline-block; color:#FFF"><label for="select-date-range"></label>Date
+                    Range:</h4>
+                <select id="select-date-range">
+                    <option value="1">
+                        Last 1 Day
+                    </option>
+                    <option value="3">
+                        Last 3 Days
+                    </option>
+                    <option value="7">
+                        Last Week
+                    </option>
+                    <option selected value="30">
+                        Last Month
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3" style="padding-left:20px;"><img alt="msig-logo" src="img/msig-logo.png"
+                                                              style="height:50px"></div>
+
+        <div class="col-sm-offset-3 col-sm-6 pull-right">
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-4 text-right">
+                    <img alt="profile-pic" height="50px" src="img/profile-pic.jpg" style="border: 1px solid #003466;border-radius: 3px;
+                                          margin-top: 5px; margin-left: 5px; display:inline-block">
+                </div>
+                <div class="col-sm-3 text-left" style="line-height:5px; margin-left: -10px;">
+                    <h4>Raymond Tan</h4>
+
+                    <p>Customer Tier: Silver</p>
+                    <!--<h4 style="display:inline-block">Raymond Tan</h4>-->
+                    <!--<h4 style="display:inline-block">-->
+                    <!--Customer Tier: <strong>Silver</strong>-->
+                </div>
+                <div class="col-sm-3" style="margin-top:5px;">
+                    <button type="button" class="btn btn-default btn-lg" style="background-color: rgba(255,255,255,0.5)">
+                        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-lg" style="background-color: rgba(255,255,255,0.5)">
+                        <div class="glyphicon glyphicon-envelope" aria-hidden="true"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="chart-wrapper" id="driver-score-2">
+                <div class="chart-title">
+                    Driver Score
+                </div>
+                <div class="chart-stage text-center" id="div-overall-score">
+                    <!--<input class="dial" type="text" value="75" id="input-overall-score">-->
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="chart-wrapper" id="driver-score">
+                <div class="chart-title">
+                    Score Breakdown
+                </div>
+                <div class="chart-stage" id="driver-score-chart"><img data-src="holder.js/100px300/white">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="chart-wrapper">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-property-name="Score" data-toggle="tab" href="#score">Score</a>
+                    </li>
+                    <li>
+                        <a data-property-name="Speed" data-toggle="tab" href="#speed">Speed</a>
+                    </li>
+                    <li>
+                        <a data-property-name="Odometer" data-toggle="tab" href="#distance">Distance</a>
+                    </li>
+                    <li>
+                        <a data-property-name="HarshBrake" data-toggle="tab" href="#harsh-breaking">Harsh
+                            Breaking</a>
+                    </li>
+                    <li>
+                        <a data-property-name="SuddenTurn" data-toggle="tab" href="#sudden-turn">Sudden
+                            Turn</a>
+                    </li>
+                    <li>
+                        <a data-property-name="HarshAcceleration" data-toggle="tab"
+                           href="#harsh-acceleration">Harsh Acceleration
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="score" role="tabpanel">
+                        <div class="chart-stage"></div>
+                    </div>
+                    <div class="tab-pane" id="speed" role="tabpanel">
+                        <div class="chart-stage"></div>
+                    </div>
+                    <div class="tab-pane" id="distance" role="tabpanel">
+                        <div class="chart-stage"></div>
+                    </div>
+                    <div class="tab-pane" id="harsh-breaking" role="tabpanel">
+                        <div class="chart-stage"></div>
+                    </div>
+                    <div class="tab-pane" id="sudden-turn" role="tabpanel">
+                        <div class="chart-stage"></div>
+                    </div>
+                    <div class="tab-pane" id="harsh-acceleration" role="tabpanel">
+                        <div class="chart-stage"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="chart-wrapper">
+                        <div class="chart-title">
+                            Policy Info
+                        </div>
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td class="text-right" style="border-top: 0;">Policy No</td>
+                                <td style="border-top: 0;">25002921001</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Policy Type</td>
+                                <td>MSIG Smart Drive<br><a href="#">View policy details</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Coverage Period</td>
+                                <td>15/03/2015 - 15/03/2016</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="chart-wrapper">
+                        <div class="chart-title">
+                            Driver Details
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-right" style="border-top: 0;">Age</td>
+                                        <td style="border-top: 0;">36</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">Gender</td>
+                                        <td>Male</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">Driving Experience</td>
+                                        <td>15 Years</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-6">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-right" style="border-top: 0;">Car Maker</td>
+                                        <td style="border-top: 0;">Nissan</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">Car Model</td>
+                                        <td>Latio</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">Car Year</td>
+                                        <td>2008</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="chart-wrapper" id="map"><img data-src="holder.js/100px575/white"></div>
+        </div>
+    </div>
+</div>
+<hr>
+<p class="small text-muted">Built with &#9829; by <a href="https://keen.io">Keen IO</a></p>
+<script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ9aGrxyUAHdKQY6BDVnaVrye0NjQbzvQ&callback=initMap">
+    </script>
+<script>
+    Holder.addTheme("white", {
+        background: "#fff",
+        foreground: "#a7a7a7",
+        size: 10
+    });
+</script>
+</body>
+
+</html>

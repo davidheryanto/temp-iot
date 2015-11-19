@@ -1,0 +1,117 @@
+
+<!-- saved from url=(0035)http://localhost:5000/documentation -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            Documentation
+            </title>
+        <style>
+            @font-face {
+    font-family: "Helvetica Light";
+    src: url(Helvetica-Light.otf);
+}
+
+            * {
+                margin: 0;
+                padding: 0;
+                font-family: "Helvetica Light", Arial, Helvetica, Geneva, sans-serif;
+            }
+
+            body {
+                margin: 10px;
+            }
+
+            div.mapping {
+                margin: 20px 20px;
+            }
+
+            ul.methods:before { content: "Methods: "; }
+            ul.methods li {
+                display: inline;
+                list-style: none;
+            }
+            ul.methods li:after { content: ","; }
+            ul.methods li:last-child:after { content: ""; }
+
+            ul.arguments:before { content: "Arguments: "; }
+            ul.arguments li {
+                display: inline;
+                list-style: none;
+            }
+            ul.arguments .argument { font-style:italic }
+            ul.arguments .default:not(:empty):before { content: "("; }
+            ul.arguments .default:not(:empty):after { content: ")"; }
+            ul.arguments li:after { content: ","; }
+            ul.arguments li:last-child:after { content: ""; }
+
+            .docstring:before { content: "Description: "; }
+        </style>
+    <style type="text/css"></style></head>
+    <body>
+        <h1>
+            Documentation
+            </h1>
+
+        
+        <div class="mapping">
+            <a id="rule-/score/%3Cint%3An_prev_day%3E" class="rule"><h2>/score/&lt;int:n_prev_day&gt;</h2></a>
+            <ul class="methods">
+                    <li class="method">HEAD</li>
+                    <li class="method">OPTIONS</li>
+                    <li class="method">GET</li>
+                    
+            </ul>
+            <ul class="arguments">
+                
+                <li>
+                    <span class="argument">n_prev_day</span>
+                    <span class="default"></span>
+                </li>
+                
+            </ul>
+            <p class="docstring"><br>
+    Get each driver score parameter<br>
+    :param n_prev_day: &lt;last n_prev_day&gt; day score will be returned<br>
+    :return: {"score": [&lt;distance_score&gt;,<br>
+                        &lt;harsh_break_score&gt;,<br>
+                        &lt;sudden_turn_score&gt;,<br>
+                        &lt;harsh_accel_score&gt;,<br>
+                        &lt;speed_score&gt;]<br>
+            }<br>
+    </p>
+        </div>
+        
+        <div class="mapping">
+            <a id="rule-/timeseries/%3Cproperty_name%3E/%3Cint%3An_prev_day%3E" class="rule"><h2>/timeseries/&lt;property_name&gt;/&lt;int:n_prev_day&gt;</h2></a>
+            <ul class="methods">
+                    <li class="method">HEAD</li>
+                    <li class="method">OPTIONS</li>
+                    <li class="method">GET</li>
+                    
+            </ul>
+            <ul class="arguments">
+                
+                <li>
+                    <span class="argument">n_prev_day</span>
+                    <span class="default"></span>
+                </li>
+                
+                <li>
+                    <span class="argument">property_name</span>
+                    <span class="default"></span>
+                </li>
+                
+            </ul>
+            <p class="docstring"><br>
+    Get the historical values for the car status property<br>
+    :param property_name: status property, currently accept: Score, Speed, Odometer or Location<br>
+    :param n_prev_day: &lt;last n_prev_day&gt; day values will be returned<br>
+    :return:<br>
+    if property_name is Location:<br>
+      {"series": [ [&lt;timestamp&gt;,{"latitude": &lt;float_val&gt;, "longitude": &lt;float_val&gt;}], ... ] }<br>
+    else:<br>
+      {"series": [ [&lt;timestamp&gt;, &lt;value&gt;], ...] }<br>
+    </p>
+        </div>
+        
+    
+</body></html>
