@@ -348,4 +348,4 @@ def query_property_history_by_name(property_name, n_prev_day):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)

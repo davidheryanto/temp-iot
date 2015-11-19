@@ -130,7 +130,7 @@ function initMap() {
     // https://developers.google.com/maps/documentation/javascript/tutorial
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 1.385244, lng: 102.851920},
-        zoom: 16,
+        zoom: 12,
         streetViewControl: false,
         mapTypeControl: false
     });
@@ -149,7 +149,7 @@ function updateMap() {
         success: function (data) {
             console.log(serverEndpoint + "/timeseries/Location/" + selectDateRange);
             console.log(data);
-            var seriesData = data["chartOptions"]["series"][0]["data"];
+            var seriesData = data["series"];
 
             if (seriesData.length <= 0) {
                 return;
