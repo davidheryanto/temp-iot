@@ -72,17 +72,6 @@ def main():
     ibm_client.connect()
     logger.info('IBM IoT client connected')
 
-    # Setup Cloudant DB client
-    db_client = get_db_client('c764fbec-cba0-4af2-aadb-46e4d53e6d41-bluemix',
-                              '170c82197c96759d4bd2effa9f183c5e5d1d7f1ca1aae380539fcd512df2d78f')
-    db_client.connect()
-    session = db_client.session()
-    logger.info("DB client connected")
-
-    db_name = 'atrack'
-    db = db_client[db_name]
-    logger.info("{} DB opened".format(db_name))
-
     # Setup socket server
     host = ''
     port = 5000
@@ -92,6 +81,7 @@ def main():
     s.bind((host, port))
     s.listen(backlog)
 
+    logger.info('Socket server accepting connection ...')
     socket_client, address = s.accept()
     logger.info('Socket server connected to {}'.format(address))
     count = 0
@@ -111,11 +101,6 @@ def main():
 
             logger.debug('IBM client successfully published event:')
             logger.debug('{}'.format(data_to_send))
-
-            doc = db.create_document(data_to_send)
-            logger.debug('Created document: {}'.format(
-                doc.document_url
-            ))
 
     socket_client.close()
 
